@@ -445,7 +445,7 @@ void CNewUINPCDialogue::SetCurSelTexts()
 	{
 		::sprintf(szAnswer, "%d. ", i + 1);
 		pszAnswer = g_QuestMng.GetNPCDlgAnswer(m_dwCurDlgIndex, i);
-		if (NULL == pszAnswer)
+		if (NULL == pszAnswer || "" == pszAnswer)
 			break;
 		::strcat(szAnswer, pszAnswer);
 

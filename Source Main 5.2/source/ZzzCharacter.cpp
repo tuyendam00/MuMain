@@ -239,7 +239,7 @@ void SetPlayerStop(CHARACTER *c)
 
            	int Index = TERRAIN_INDEX_REPEAT((int)(c->Object.Position[0]/TERRAIN_SCALE),(int)(c->Object.Position[1]/TERRAIN_SCALE));
 			
-            if ( SceneFlag==MAIN_SCENE && ( gMapManager.WorldActive==WD_7ATLANSE || gMapManager.InHellas() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) && (TerrainWall[Index]&TW_SAFEZONE)!=TW_SAFEZONE ) 
+            if ( SceneFlag==MAIN_SCENE && ( gMapManager.WorldActive==WD_7ATLANSE || gMapManager.InKalima() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) && (TerrainWall[Index]&TW_SAFEZONE)!=TW_SAFEZONE ) 
 				Fly = true;
 			
 			if( c->MonsterIndex == 257) 
@@ -421,14 +421,14 @@ void SetPlayerWalk(CHARACTER *c)
 #ifdef PBG_ADD_NEWCHAR_MONK
 			|| GetBaseClass(c->Class) == CLASS_RAGEFIGHTER
 #endif //PBG_ADD_NEWCHAR_MONK
-			|| ( ( gMapManager.WorldActive != WD_7ATLANSE && !gMapManager.InHellas() && gMapManager.WorldActive != WD_67DOPPLEGANGER3) && c->BodyPart[BODYPART_BOOTS ].Type!=-1 && c->BodyPart[BODYPART_BOOTS ].Level>=5) 
-			|| ( ( gMapManager.WorldActive == WD_7ATLANSE ||  gMapManager.InHellas()
+			|| ( ( gMapManager.WorldActive != WD_7ATLANSE && !gMapManager.InKalima() && gMapManager.WorldActive != WD_67DOPPLEGANGER3) && c->BodyPart[BODYPART_BOOTS ].Type!=-1 && c->BodyPart[BODYPART_BOOTS ].Level>=5) 
+			|| ( ( gMapManager.WorldActive == WD_7ATLANSE ||  gMapManager.InKalima()
 			|| gMapManager.WorldActive == WD_67DOPPLEGANGER3
 			) && c->BodyPart[BODYPART_GLOVES].Type!=-1 && c->BodyPart[BODYPART_GLOVES].Level>=5) 
-			|| ( ( gMapManager.WorldActive != WD_7ATLANSE && !gMapManager.InHellas() 
+			|| ( ( gMapManager.WorldActive != WD_7ATLANSE && !gMapManager.InKalima() 
 			&& gMapManager.WorldActive != WD_67DOPPLEGANGER3
 			) && iItemBootsLevel >= 40 )
-			|| ( ( gMapManager.WorldActive == WD_7ATLANSE ||  gMapManager.InHellas()
+			|| ( ( gMapManager.WorldActive == WD_7ATLANSE ||  gMapManager.InKalima()
 			|| gMapManager.WorldActive == WD_67DOPPLEGANGER3
 			) && iItemGlovesLevel >= 40 ) 
 			|| c->Helper.Type == MODEL_HELPER+37
@@ -585,7 +585,7 @@ void SetPlayerWalk(CHARACTER *c)
 				else
     				SetAction(&c->Object,PLAYER_FLY);
 			}
-			else if(!c->SafeZone && ( gMapManager.WorldActive==WD_7ATLANSE || gMapManager.InHellas() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) )
+			else if(!c->SafeZone && ( gMapManager.WorldActive==WD_7ATLANSE || gMapManager.InKalima() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) )
 			{
 				if(c->Run >= 40)
     				SetAction(&c->Object,PLAYER_RUN_SWIM);
@@ -1494,7 +1494,7 @@ void AttackEffect(CHARACTER *c)
 	Vector(0.f,0.f,0.f,p);
 	Vector(1.f,1.f,1.f,Light);
 
-    if ( gMapManager.InHellas() )
+    if ( gMapManager.InKalima() )
     {
         CHARACTER *tc = NULL;
         OBJECT *to = NULL;
@@ -2014,7 +2014,7 @@ void AttackEffect(CHARACTER *c)
 					if(i>=2) Hand = 1;
 					b->TransformPosition(o->BoneTransform[c->Weapon[Hand].LinkBone],p,Position,true);
 					Vector(0.f,0.f,(float)(rand()%360),Angle);
-					CreateJoint(BITMAP_JOINT_LASER+1,Position,to->Position,Angle,0,to,50.f);
+					CreateJoint(BITMAP_JOINT_LASER+1,Position,to->Position,Angle,0,to,50.f); //comment if for fix effect in tarkan monter Beam Knight
 					CreateParticle(BITMAP_FIRE,Position,o->Angle,o->Light);
 				}
 				break;
@@ -4235,7 +4235,7 @@ void MoveCharacter(CHARACTER *c,OBJECT *o)
 			CreateEffect(MODEL_CIRCLE,o->Position,o->Angle,o->Light,0,o,o->PKKey,FindHotKey(( c->Skill )));
 			CreateEffect(MODEL_CIRCLE_LIGHT,o->Position,o->Angle,o->Light);
 
-            if ( gMapManager.InHellas()==true )
+            if ( gMapManager.InKalima()==true )
             {
                 AddWaterWave( (c->PositionX), (c->PositionY), 2, -1500 );
             }
@@ -5228,7 +5228,7 @@ void PlayWalkSound()
 		{
 			PlayBuffer(SOUND_HUMAN_WALK_GRASS);
 		}
-        else if( ( gMapManager.WorldActive==WD_7ATLANSE || gMapManager.InHellas() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) && !Hero->SafeZone)
+        else if( ( gMapManager.WorldActive==WD_7ATLANSE || gMapManager.InKalima() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) && !Hero->SafeZone)
 		{
 			PlayBuffer(SOUND_HUMAN_WALK_SWIM);
 		}
@@ -6089,7 +6089,7 @@ void MoveCharacterVisual(CHARACTER *c,OBJECT *o)
 			|| o->CurrentAction==PLAYER_RAGE_UNI_RUN_ONE_RIGHT
 #endif //PBG_ADD_NEWCHAR_MONK_ANI
 			|| o->CurrentAction==PLAYER_RUN_RIDE_WEAPON || o->CurrentAction==PLAYER_RUN_SWIM || o->CurrentAction==PLAYER_WALK_SWIM || o->CurrentAction==PLAYER_FLY || o->CurrentAction==PLAYER_FLY_CROSSBOW || o->CurrentAction==PLAYER_RUN_RIDE_HORSE ) && 
-               o->Type==MODEL_PLAYER && gMapManager.InHellas() )
+               o->Type==MODEL_PLAYER && gMapManager.InKalima() )
         {
             vec3_t Light = { 0.3f, 0.3f, 0.3f };
             VectorCopy ( o->Position, Position );
@@ -8276,7 +8276,7 @@ void RenderCharacter(CHARACTER *c,OBJECT *o,int Select)
     if ( o->Alpha>=0.5f && c->HideShadow==false )
     {
         if ( gMapManager.WorldActive !=WD_10HEAVEN && (o->Type==MODEL_PLAYER) && (!(MODEL_HELPER+2<=c->Helper.Type && c->Helper.Type<=MODEL_HELPER+3) || c->SafeZone ) 
-            && gMapManager.InHellas()==false
+            && gMapManager.InKalima()==false
             )
         {
             if ( gMapManager.InBloodCastle() && o->m_bActionStart && c->Dead>0 )
@@ -12490,6 +12490,8 @@ void Setting_Monster(CHARACTER *c,int Type,int PositionX,int PositionY)
 
 	if(c != NULL)
 	{
+		strcpy(c->ID, ::getMonsterName(Type));
+
 		o = &c->Object;
 		for(int i=0;i<MAX_MONSTER;i++)
 		{
@@ -14643,7 +14645,7 @@ bool RenderCharacterBackItem(CHARACTER *c, OBJECT* o, bool bTranslate)
 	{
 		bBindBack = true;
 	}
-	if((gMapManager.WorldActive == WD_7ATLANSE || gMapManager.InHellas() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) && (o->CurrentAction==PLAYER_WALK_SWIM || o->CurrentAction==PLAYER_RUN_SWIM ))
+	if((gMapManager.WorldActive == WD_7ATLANSE || gMapManager.InKalima() || gMapManager.WorldActive == WD_67DOPPLEGANGER3) && (o->CurrentAction==PLAYER_WALK_SWIM || o->CurrentAction==PLAYER_RUN_SWIM ))
 	{
 		bBindBack = true;
 	}

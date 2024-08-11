@@ -41,7 +41,7 @@ static  const int g_iKalimaLevel[14][2] = { { 40, 999 }, { 131, 999 }, { 181, 99
 
 bool CreateWaterTerrain ( int mapIndex )
 {
-    if ( gMapManager.InHellas( mapIndex ) )
+    if ( gMapManager.InKalima() )
     {
         DeleteWaterTerrain ();
 
@@ -133,7 +133,7 @@ BYTE GetHellasLevel(int Class, int Level)
     int startIndex = 0;
     if (gCharacterManager.GetBaseClass( Class )==CLASS_DARK || gCharacterManager.GetBaseClass( Class )==CLASS_DARK_LORD   
 #ifdef PBG_ADD_NEWCHAR_MONK
-		|| GetBaseClass( Class )==CLASS_RAGEFIGHTER
+		|| gCharacterManager.GetBaseClass( Class )==CLASS_RAGEFIGHTER
 #endif //PBG_ADD_NEWCHAR_MONK
 		)
     {
@@ -158,7 +158,7 @@ bool EnableKalima(int Class, int Level, int ItemLevel)
 
     if(gCharacterManager.GetBaseClass( Class ) == CLASS_DARK || gCharacterManager.GetBaseClass( Class ) == CLASS_DARK_LORD
 #ifdef PBG_ADD_NEWCHAR_MONK
-		|| GetBaseClass( Class ) == CLASS_RAGEFIGHTER
+		|| gCharacterManager.GetBaseClass( Class ) == CLASS_RAGEFIGHTER
 #endif //PBG_ADD_NEWCHAR_MONK
 		)
     {
@@ -181,7 +181,7 @@ bool GetUseLostMap ( bool bDrawAlert )
 
     if(gCharacterManager.GetBaseClass( Hero->Class )==CLASS_DARK || gCharacterManager.GetBaseClass( Hero->Class )==CLASS_DARK_LORD  
 #ifdef PBG_ADD_NEWCHAR_MONK
-		|| GetBaseClass( Hero->Class )==CLASS_RAGEFIGHTER
+		|| gCharacterManager.GetBaseClass( Hero->Class )==CLASS_RAGEFIGHTER
 #endif //PBG_ADD_NEWCHAR_MONK
 		)
     {
@@ -219,7 +219,7 @@ int RenderHellasItemInfo(ITEM* ip, int textNum )
             int startIndex = 0;
             if (gCharacterManager.GetBaseClass( Hero->Class )==CLASS_DARK || gCharacterManager.GetBaseClass( Hero->Class )==CLASS_DARK_LORD  
 #ifdef PBG_ADD_NEWCHAR_MONK
-					|| GetBaseClass( Hero->Class )==CLASS_RAGEFIGHTER
+					|| gCharacterManager.GetBaseClass( Hero->Class )==CLASS_RAGEFIGHTER
 #endif //PBG_ADD_NEWCHAR_MONK
 				)
             {
@@ -311,7 +311,7 @@ void RenderObjectDescription()
 
 bool MoveHellasObjectSetting(int& objCount, int object)
 {
-    if ( gMapManager.InHellas()==false ) return false;
+    if ( gMapManager.InKalima()==false ) return false;
 
     PlayBuffer ( SOUND_KALIMA_AMBIENT );
     if ( (MoveSceneFrame%100)==0 )
@@ -363,7 +363,7 @@ bool MoveHellasObjectSetting(int& objCount, int object)
 
 bool MoveHellasObject(OBJECT* o, int& object, int& visibleObject)
 {
-    if ( gMapManager.InHellas()==true )
+    if ( gMapManager.InKalima()==true )
     {
         return true;
     }
@@ -373,7 +373,7 @@ bool MoveHellasObject(OBJECT* o, int& object, int& visibleObject)
 
 bool MoveHellasAllObject(OBJECT* o)
 {
-    if ( gMapManager.InHellas()==false ) return false;
+    if ( gMapManager.InKalima()==false ) return false;
 
     return true;
 }
@@ -385,7 +385,7 @@ bool CreateHellasObject(OBJECT* o)
 
 bool MoveHellasVisual(OBJECT* o)
 {
-    if ( gMapManager.InHellas()==false ) return false;
+    if ( gMapManager.InKalima()==false ) return false;
 
     switch(o->Type)
     {
@@ -433,7 +433,7 @@ void CheckGrass(OBJECT* o)
 
 bool RenderHellasVisual(OBJECT* o,BMD* b)
 {
-    if ( gMapManager.InHellas()==false ) return false;
+    if ( gMapManager.InKalima()==false ) return false;
 
     vec3_t p, Position;
     vec3_t Light;
@@ -512,7 +512,7 @@ bool RenderHellasVisual(OBJECT* o,BMD* b)
 
 bool RenderHellasObjectMesh ( OBJECT* o, BMD* b )
 {
-    if ( o->Type==MODEL_MONSTER01+33 && gMapManager.InHellas() )
+    if ( o->Type==MODEL_MONSTER01+33 && gMapManager.InKalima() )
     {
 		Vector ( 0.0f, 0.0f, 0.0f, b->BodyLight );
         b->RenderBody( RENDER_TEXTURE, o->Alpha, o->BlendMesh, o->BlendMeshLight, o->BlendMeshTexCoordU, o->BlendMeshTexCoordV, o->HiddenMesh );
@@ -588,7 +588,7 @@ bool RenderHellasObjectMesh ( OBJECT* o, BMD* b )
         }
 		return true;
 	}
-    else if ( gMapManager.InHellas()==true && ( o->Type>=MODEL_WORLD_OBJECT && o->Type<MAX_WORLD_OBJECTS ) )
+    else if ( gMapManager.InKalima()==true && ( o->Type>=MODEL_WORLD_OBJECT && o->Type<MAX_WORLD_OBJECTS ) )
     {
         b->RenderBody( RENDER_TEXTURE,o->Alpha,o->BlendMesh,o->BlendMeshLight,o->BlendMeshTexCoordU,o->BlendMeshTexCoordV,o->HiddenMesh );
         
@@ -632,7 +632,7 @@ bool RenderHellasObjectMesh ( OBJECT* o, BMD* b )
 
 int CreateBigMon( OBJECT* o )
 {
-	if ( gMapManager.InHellas()==false ) return 0;
+	if ( gMapManager.InKalima()==false ) return 0;
 
 	if ((MoveSceneFrame % 100) == 0)
 	{
@@ -1652,7 +1652,7 @@ bool RenderHellasMonsterVisual ( CHARACTER* c, OBJECT* o, BMD* b )
 				if (o->LifeTime == 100 && o->AnimationFrame > 4.0f)
 				{
 					o->LifeTime = 101;
-					if ( gMapManager.InHellas() )
+					if ( gMapManager.InKalima() )
 					{
 		                AddWaterWave( (c->PositionX), (c->PositionY), 2, 2000 );
 					}
@@ -1661,7 +1661,7 @@ bool RenderHellasMonsterVisual ( CHARACTER* c, OBJECT* o, BMD* b )
 				{
 					EarthQuake = (float)(rand()%8-8)*0.2f;
 				}
-				if (gMapManager.InHellas() && o->AnimationFrame > 3.0f && o->AnimationFrame < 14.0f)
+				if (gMapManager.InKalima() && o->AnimationFrame > 3.0f && o->AnimationFrame < 14.0f)
 				{
 					vec3_t Position, Light;
 					Vector ( 0.3f, 0.8f, 1.f, Light );
@@ -1725,7 +1725,7 @@ bool RenderHellasMonsterVisual ( CHARACTER* c, OBJECT* o, BMD* b )
 						Angle[2] = ( float)(i*30);
 						CreateJoint(BITMAP_JOINT_SPIRIT2,Position,Position,Angle,14,NULL,100.f,0,0);
 					}
-					if ( gMapManager.InHellas() )
+					if ( gMapManager.InKalima() )
 					{
 		                AddWaterWave( (c->PositionX), (c->PositionY), 2, 2000 );
 					}
@@ -1733,7 +1733,7 @@ bool RenderHellasMonsterVisual ( CHARACTER* c, OBJECT* o, BMD* b )
 				if (o->LifeTime == 102 && o->AnimationFrame > 9.0f)
 				{
 					o->LifeTime = 103;
-					if ( gMapManager.InHellas() )
+					if ( gMapManager.InKalima() )
 					{
 		                AddWaterWave( (c->PositionX), (c->PositionY), 2, 2000 );
 					}

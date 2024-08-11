@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -104,7 +104,7 @@ bool EnableEdit    = false;
 
 int g_iLengthAuthorityCode = 20;
 
-char *szServerIpAddress = "192.168.0.104";
+char *szServerIpAddress = "192.168.1.158";
 //char *szServerIpAddress = "210.181.89.215";
 WORD g_ServerPort = 44405;
 
@@ -267,8 +267,8 @@ bool CheckAbuseNameFilter(char *Text)
 bool CheckName()
 {
     if( CheckAbuseNameFilter(InputText[0]) || CheckAbuseFilter(InputText[0]) ||
-		FindText(InputText[0]," ") || FindText(InputText[0],"��") ||
-		FindText(InputText[0],".") || FindText(InputText[0],"��") || FindText(InputText[0],"��") ||
+		FindText(InputText[0]," ") || FindText(InputText[0],"¡¡") ||
+		FindText(InputText[0],".") || FindText(InputText[0],"¡¤") || FindText(InputText[0],"¡­") ||
 		FindText(InputText[0],"Webzen") || FindText(InputText[0],"WebZen") || FindText(InputText[0],"webzen") ||  FindText(InputText[0],"WEBZEN") ||
 		FindText(InputText[0],GlobalText[457]) || FindText(InputText[0],GlobalText[458]))
 		return true;
@@ -1379,7 +1379,7 @@ bool NewRenderLogInScene(HDC hDC)
 	if (CCameraMove::GetInstancePtr()->IsTourMode())
 	{
 #ifndef PJH_NEW_SERVER_SELECT_MAP
-		// ȭ�� �帮��
+		// È­¸é Èå¸®±â
 		EnableAlphaBlend4();
 		glColor4f(0.7f,0.7f,0.7f,1.0f);
 		float fScale = (sinf(WorldTime*0.0005f) + 1.f) * 0.00011f;
@@ -1391,17 +1391,17 @@ bool NewRenderLogInScene(HDC hDC)
 		fScale = (sinf(WorldTime*0.0015f) + 1.f) * 0.00021f;
 		RenderBitmapLocalRotate(BITMAP_CHROME+4,320.0f,240.0f, 1150.0f, 1150.0f, fAngle, fScale*512.f,fScale*512.f, (512.f)/512.f-fScale*2*512.f,(512.f)/512.f-fScale*2*512.f);
 
-		// ���Ʒ� �ڸ���
+		// À§¾Æ·¡ ÀÚ¸£±â
 		EnableAlphaTest();
 		glColor4f(0.0f,0.0f,0.0f,1.0f);
 		RenderColor(0, 0, 640, 25);
 		RenderColor(0, 480-25, 640, 25);
 
-		// ȭ��ĥ
+		// È­¸éÄ¥
 		glColor4f(0.0f,0.0f,0.0f,0.2f);
 		RenderColor(0, 25, 640, 430);
 #endif //PJH_NEW_SERVER_SELECT_MAP
-		// �·ΰ�
+		// ¹Â·Î°í
 		g_fMULogoAlpha += 0.02f;
 		if (g_fMULogoAlpha > 10.0f) g_fMULogoAlpha = 10.0f;
 		
@@ -1554,46 +1554,49 @@ bool MoveMainCamera()
 #ifdef ENABLE_EDIT2
 	{
 		bool EditMove = false;
+		// ---- 3D camera ----
+		if (gMapManager.WorldActive == WD_74NEW_CHARACTER_SCENE || gMapManager.WorldActive == WD_73NEW_LOGIN_SCENE) // Fix for opening scene and character selection
+		{
+			CameraZoom = 0;
+			AngleY3D = 0;
+		}
+		CameraFOV = 35.f + CameraZoom;
+		// -------------------
+
 		if( !g_pUIManager->IsInputEnable() )
 		{
-			if(HIBYTE(GetAsyncKeyState(VK_INSERT))==128)
-				CameraAngle[2] += 15;
-			if(HIBYTE(GetAsyncKeyState(VK_DELETE))==128)
-				CameraAngle[2] -= 15;
+			if (m_CameraOnOff == 1)
+			{
+				if (HIBYTE(GetAsyncKeyState(109)) == 128 || HIBYTE(GetAsyncKeyState(VK_PRIOR)) == 128) // PAGE UP or +
+				{
+					if (CameraZoom < 12) CameraZoom += 2;
+				}
+				if (HIBYTE(GetAsyncKeyState(107)) == 128 || HIBYTE(GetAsyncKeyState(VK_NEXT)) == 128) // PAGE DOWN or -
+				{
+					if (CameraZoom > -12) CameraZoom -= 2;
+				}
 
-			vec3_t p1,p2;
-			Vector(0.f,0.f,0.f,p1);
-			FLOAT Velocity = sqrtf(TERRAIN_SCALE*TERRAIN_SCALE)*1.25f;
+				if (HIBYTE(GetAsyncKeyState(VK_RIGHT)) == 128) // RIGHT ARROW
+					CameraAngle[2] -= 4;
+				if (HIBYTE(GetAsyncKeyState(VK_LEFT)) == 128) // LEFT ARROW
+					CameraAngle[2] += 4;
 
-			if(HIBYTE(GetAsyncKeyState(VK_LEFT ))==128)// || (MouseX<=0 && MouseY>=100))
-			{
-				Vector(-Velocity, -Velocity, 0.f, p1);
-				EditMove = true;
+				if (HIBYTE(GetAsyncKeyState(VK_DOWN)) == 128) // DOWN ARROW
+					if (AngleY3D < 5) AngleY3D += 1;
+				if (HIBYTE(GetAsyncKeyState(VK_UP)) == 128) // UP ARROW
+					if (AngleY3D > -10) AngleY3D -= 1;
+				if (HIBYTE(GetAsyncKeyState(VK_F11)) == 128) // END keys for reset 3D camera
+				{
+					CameraZoom = 0;
+					CameraAngle[2] = -45.f;
+					AngleY3D = 0;
+				}
 			}
-			if(HIBYTE(GetAsyncKeyState(VK_RIGHT))==128)// || (MouseX>=639 && MouseY>=100))
-			{
-				Vector(Velocity, Velocity, 0.f, p1);
-				EditMove = true;
+			else {
+				CameraZoom = 0;
+				CameraAngle[2] = -45.f;
+				AngleY3D = 0;
 			}
-			if(HIBYTE(GetAsyncKeyState(VK_UP   ))==128)// || (MouseY<=0 && MouseX>=100 && MouseX<540))
-			{
-				Vector(-Velocity, Velocity, 0.f, p1);
-				EditMove = true;
-			}
-			if(HIBYTE(GetAsyncKeyState(VK_DOWN ))==128)// || (MouseY>=479))
-			{
-				Vector(Velocity, -Velocity, 0.f, p1);
-				EditMove = true;
-			}
-
-			glPushMatrix();
-			glLoadIdentity();
-			glRotatef(-CameraAngle[2],0.f,0.f,1.f);
-			float Matrix[3][4];
-			GetOpenGLMatrix(Matrix);
-			glPopMatrix();
-			VectorRotate(p1,Matrix,p2);
-			VectorAdd(Hero->Object.Position, p2, Hero->Object.Position);
 		}
 
         if ( gMapManager.InChaosCastle()==false || !Hero->Object.m_bActionStart	)
@@ -1771,9 +1774,9 @@ bool MoveMainCamera()
 			CameraAngle[0] = -84.5f;
 			CameraAngle[1] = 0.0f;
 			CameraAngle[2] = -75.0f;
- 			CameraPosition[0] = 9758.93f;
- 			CameraPosition[1] = 18913.11f;
- 			CameraPosition[2] = 675.5f;
+			CameraPosition[0] = 9758.93f;
+			CameraPosition[1] = 18913.11f;
+			CameraPosition[2] = 675.5f;
 #else //PJH_NEW_SERVER_SELECT_MAP
 			CameraAngle[0] = -84.5f;
 			CameraAngle[1] = 0.0f;
@@ -1786,6 +1789,10 @@ bool MoveMainCamera()
 		else
 		{
 			CameraAngle[0] = -48.5f;
+			if (m_CameraOnOff == 1)
+			{
+				CameraAngle[0] += AngleY3D;
+			}
 		}
 
 		CameraAngle[0] += EarthQuake;
@@ -1852,6 +1859,16 @@ bool MoveMainCamera()
             }
         }
     }
+
+	// Field of vision
+	if (m_CameraOnOff == 1)
+	{
+		if (CameraZoom > 0)
+			CameraViewFar += 458.33f + (458.33f * CameraZoom);
+		else
+			CameraViewFar += 1458.33f;
+	}
+
     return bLockCamera;
 }
 
@@ -1929,28 +1946,54 @@ void MoveMainScene()
 	MouseOnWindow = false;
 
 
-	if(!CameraTopViewEnable	&& LoadingWorld < 30 )
+	if (!CameraTopViewEnable
+		|| m_CameraOnOff == 1	// <= 3D Camera
+		//&& (g_bReponsedMoveMapFromServer == TRUE)		
+		&& LoadingWorld < 30
+		)
 	{
-		if(MouseY>=(int)(480-48))
+#ifdef MOD_MOUSE_Y_CLICK_AREA
+		if (GFxProcess::GetInstancePtr()->GetUISelect() == 1)
+		{
+			if (MouseY >= (int)(480))
+				MouseOnWindow = true;
+		}
+		else
+		{
+			if (MouseY >= (int)(480 - 48))
+				MouseOnWindow = true;
+		}
+#else //MOD_MOUSE_Y_CLICK_AREA
+		if (MouseY >= (int)(480 - 48))
 			MouseOnWindow = true;
+#endif //MOD_MOUSE_Y_CLICK_AREA
 
 		g_pPartyManager->Update();
 		g_pNewUISystem->Update();
-		
-		if (MouseLButton == true && false == g_pNewUISystem->CheckMouseUse() && g_dwMouseUseUIID == 0 && g_pNewUISystem->IsVisible(SEASON3B::INTERFACE_CHATINPUTBOX) == false )
+
+		// Ŕ©µµżě ľĆ´Ń°÷ Ĺ¬¸Ż˝Ă
+		if (MouseLButton == true
+			&& false == g_pNewUISystem->CheckMouseUse() /* NewUIżë ¸¶żě˝ş ĂĽĹ© */
+			&& g_dwMouseUseUIID == 0 /* ±âÁ¸ŔÇ UI ¸¶żě˝ş ĂĽĹ© ŔüżŞ şŻĽö */
+			&& g_pNewUISystem->IsVisible(SEASON3B::INTERFACE_CHATINPUTBOX) == false
+			)
 		{
 			g_pWindowMgr->SetWindowsEnable(FALSE);
 			g_pFriendMenu->HideMenu();
 			g_dwKeyFocusUIID = 0;
-			if(GetFocus() != g_hWnd)
+			if (GetFocus() != g_hWnd)
 			{
 				SaveIMEStatus();
 				SetFocus(g_hWnd);
 			}
 		}
+#ifdef _PVP_ADD_MOVE_SCROLL
+		g_MurdererMove.MurdererMoveCheck();
+#endif	// _PVP_ADD_MOVE_SCROLL
+
 		MoveInterface();
 		MoveTournamentInterface();
-		if( ErrorMessage != MESSAGE_LOG_OUT )
+		if (ErrorMessage != MESSAGE_LOG_OUT)
 			g_pUIManager->UpdateInput();
 	}
 
@@ -1958,7 +2001,8 @@ void MoveMainScene()
 		MouseOnWindow = true;
 
     MoveObjects();
-    if(!CameraTopViewEnable)
+    if(!CameraTopViewEnable
+		|| m_CameraOnOff == 1) // <= 3D Camera
     	MoveItems();
 	if ( ( gMapManager.WorldActive==WD_0LORENCIA && HeroTile!=4 ) || 
          ( gMapManager.WorldActive==WD_2DEVIAS && HeroTile!=3 && HeroTile<10 ) 
@@ -2024,7 +2068,7 @@ bool RenderMainScene()
 		return false;
 	}
 
-    FogEnable = false;
+    FogEnable = (m_CameraOnOff) ? true : false;;
 
     vec3_t pos;
 
@@ -2046,7 +2090,8 @@ bool RenderMainScene()
 
     BYTE byWaterMap = 0;
 
-	if(CameraTopViewEnable == false)
+	if(CameraTopViewEnable == false
+		|| m_CameraOnOff == 1) // 3D Camera
 	{
 		Height = 480-48;
 	}
@@ -2076,7 +2121,7 @@ bool RenderMainScene()
 	{
 		glClearColor(9.f/256.f,8.f/256.f,33.f/256.f,1.f);
 	}
-    else if(gMapManager.InHellas() == true)
+    else if(gMapManager.InKalima() == true)
     {
         byWaterMap = 1;
         glClearColor(0.f/256.f,0.f/256.f,0.f/256.f,1.f);
@@ -2135,7 +2180,8 @@ bool RenderMainScene()
 	{
 		RenderTerrain(true);
     }
-    if(!CameraTopViewEnable)
+    if(!CameraTopViewEnable
+		|| m_CameraOnOff == 1)    // <=  3D Camera
      	RenderItems();
 
    	RenderFishs();
@@ -2339,7 +2385,7 @@ void MainScene(HDC hDC)
 	{
 		iCaptureMode = 1 - iCaptureMode;
 	}
-	if(GrabEnable && iCaptureMode == 1)
+	if(GrabEnable && iCaptureMode == 1 && g_hWnd == GetActiveWindow())
 	{
 		g_pChatListBox->AddText("", Text, SEASON3B::TYPE_SYSTEM_MESSAGE);
 	}
@@ -2354,7 +2400,7 @@ void MainScene(HDC hDC)
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
     }
 #endif //PJH_NEW_SERVER_SELECT_MAP
-    else if (gMapManager.InHellas(gMapManager.WorldActive))
+    else if (gMapManager.InKalima())
     {
         glClearColor(30.f/256.f,40.f/256.f,40.f/256.f,1.f);
     }
@@ -2453,7 +2499,7 @@ void MainScene(HDC hDC)
 	if (DifTimer < 40)
 	{
 		int32_t dwMilliseconds = 40 - DifTimer;
-		std::this_thread::sleep_for(std::chrono::milliseconds(dwMilliseconds)); 
+		Sleep(dwMilliseconds);
 		TimePrior += dwMilliseconds;
 		DifTimer = 40;
 	}
@@ -2689,7 +2735,7 @@ void MainScene(HDC hDC)
 			StopMp3(g_lpszMp3[MUSIC_LOSTTOWER_A]);
 		}
 
-		if(gMapManager.InHellas(gMapManager.WorldActive)) {
+		if(gMapManager.InKalima()) {
 			PlayMp3(g_lpszMp3[MUSIC_KALIMA]);
 		}
 		else {

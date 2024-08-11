@@ -20,8 +20,8 @@ enum ENUM_WORLD
 	WD_11BLOODCASTLE_END = WD_11BLOODCASTLE1+6,
 	WD_18CHAOS_CASTLE,
 	WD_18CHAOS_CASTLE_END = WD_18CHAOS_CASTLE+(CHAOS_NUM-1),
-	WD_24HELLAS,
-	WD_24HELLAS_END = WD_24HELLAS+(HELLAS_NUM-2),
+	WD_24KALIMA,
+	WD_24KALIMA_END = WD_24KALIMA+(HELLAS_NUM-2),
 	WD_30BATTLECASTLE, 
 	WD_31HUNTING_GROUND = 31,
 	WD_33AIDA			= 33,
@@ -78,11 +78,11 @@ public:
 	void Load();
 	void LoadWorld(int Map);
 	void DeleteObjects();
-	bool InChaosCastle(int iMap = -1);
-	bool InBloodCastle(int iMap = -1);
+	bool InChaosCastle();
+	bool InBloodCastle();
 	bool InDevilSquare();
-	bool InHellas(int iMap = -1);
-	bool InHiddenHellas(int iMap = -1);
+	bool InKalima();
+	bool InHiddenHellas();
 	bool IsPKField();
 	bool IsCursedTemple();
 	bool IsEmpireGuardian1();
@@ -90,7 +90,7 @@ public:
 	bool IsEmpireGuardian3();
 	bool IsEmpireGuardian4();
 	bool IsEmpireGuardian();
-	bool InBattleCastle(int iMap = -1);
+	bool InBattleCastle();
 	const char* GetMapName( int iMap);
 public:
 	int WorldActive;

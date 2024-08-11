@@ -292,7 +292,7 @@ const char* CQuestMng::GetWords(int nWordsIndex)
 {
 	QuestWordsMap::const_iterator iter = m_mapQuestWords.find(nWordsIndex);
 	if (iter == m_mapQuestWords.end())
-		return NULL;
+		return "";
 
 	return iter->second.c_str();
 }
@@ -300,13 +300,13 @@ const char* CQuestMng::GetWords(int nWordsIndex)
 const char* CQuestMng::GetNPCDlgNPCWords(DWORD dwDlgState)
 {
 	if (0 == m_nNPCIndex)
-		return NULL;
+		return "";
 
 	DWORD dwNPCDlgIndex = (DWORD)m_nNPCIndex * 0x10000 + dwDlgState;
 
 	NPCDialogueMap::const_iterator iter = m_mapNPCDialogue.find(dwNPCDlgIndex);
 	if (iter == m_mapNPCDialogue.end())
-		return NULL;
+		return "";
 
 	return GetWords(iter->second.m_nNPCWords);
 }
@@ -314,7 +314,7 @@ const char* CQuestMng::GetNPCDlgNPCWords(DWORD dwDlgState)
 const char* CQuestMng::GetNPCDlgAnswer(DWORD dwDlgState, int nAnswer)
 {
 	if (0 == m_nNPCIndex)
-		return NULL;
+		return "";
 
 	_ASSERT(0 <= nAnswer || nAnswer < QM_MAX_ND_ANSWER);
 
@@ -322,11 +322,11 @@ const char* CQuestMng::GetNPCDlgAnswer(DWORD dwDlgState, int nAnswer)
 
 	NPCDialogueMap::const_iterator iter = m_mapNPCDialogue.find(dwNPCDlgIndex);
 	if (iter == m_mapNPCDialogue.end())
-		return NULL;
+		return "";
 
 	DWORD nNowAnswer = iter->second.m_anAnswer[nAnswer*2];
 	if (0 == nNowAnswer)
-		return NULL;
+		return "";
 
 	return GetWords(nNowAnswer);
 }

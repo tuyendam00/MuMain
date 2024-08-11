@@ -67,6 +67,8 @@ namespace SEASON3B
 		void SetRenderLevel(int iRender);
 		int GetRenderLevel();
 
+		void SetCameraOnOff();
+
 	private:
 		void LoadImages();
 		void UnloadImages();

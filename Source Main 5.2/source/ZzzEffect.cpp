@@ -9913,7 +9913,7 @@ void MoveEffect( OBJECT *o, int iIndex)
 		Vector(1.f,1.f,1.f,Light);
 
         Height = 20.f;
-        if ( gMapManager.InHellas() )
+        if ( gMapManager.InKalima() )
         {
             Height = 60.f;
             Vector((float)(rand()%60+60-90),0.f,(float)(rand()%30+90),Angle);
@@ -9943,7 +9943,7 @@ void MoveEffect( OBJECT *o, int iIndex)
 		Vector(1.f,0.8f,0.6f,Light);
 		CreateSprite(BITMAP_LIGHT,Position,2.f,Light,o);
 
-        if ( gMapManager.InHellas() && (o->LifeTime%4)==0 )
+        if ( gMapManager.InKalima() && (o->LifeTime%4)==0 )
         {
             int PositionX = (int)(o->Position[0]/TERRAIN_SCALE);
             int PositionY = (int)(o->Position[1]/TERRAIN_SCALE);
@@ -10040,7 +10040,7 @@ void MoveEffect( OBJECT *o, int iIndex)
 
                 float AddHeight = 25.f;
 
-                if ( gMapManager.InHellas()==true )
+                if ( gMapManager.InKalima()==true )
                 {
                     if ( o->Kind==0 || o->Kind==2 )
                     {
@@ -10109,7 +10109,7 @@ void MoveEffect( OBJECT *o, int iIndex)
 
                     if ( (wall&TW_NOMOVE)!=TW_NOMOVE && (wall&TW_NOGROUND)!=TW_NOGROUND && (wall&TW_WATER)!=TW_WATER )
                     {
-                        if ( gMapManager.InHellas()==true )
+                        if ( gMapManager.InKalima()==true )
                         {
                             AddHeight = 100.f;
                         }
@@ -10156,7 +10156,7 @@ void MoveEffect( OBJECT *o, int iIndex)
 
 						if ( (wall&TW_NOMOVE)!=TW_NOMOVE || (wall&TW_NOGROUND)!=TW_NOGROUND || (wall&TW_WATER)!=TW_WATER )
                         {
-                            if ( gMapManager.InHellas()==true )
+                            if ( gMapManager.InKalima()==true )
                                 Pos[i][2] = RequestTerrainHeight( Pos[i][0], Pos[i][1] ) + 100.f;
                             else
                                 Pos[i][2] = RequestTerrainHeight( Pos[i][0], Pos[i][1] ) + 3;
@@ -11791,7 +11791,7 @@ void MoveEffect( OBJECT *o, int iIndex)
             CreateSprite(BITMAP_SHINY+1,o->Position,(float)(rand()%8+8)*0.2f,Light,o,(float)(rand()%360));
         }
 
-        if ( gMapManager.InHellas() )
+        if ( gMapManager.InKalima() )
         {
             if ( o->Owner!=NULL && o->Owner->Owner!=NULL && o->Owner->Owner==(&Hero->Object) )
             {
@@ -12427,7 +12427,7 @@ void MoveEffect( OBJECT *o, int iIndex)
 					VectorCopy ( o->HeadAngle, o->Angle );
 				}
                 float AddHeight = 0.f;
-                if ( gMapManager.InHellas() )
+                if ( gMapManager.InKalima() )
                 {
                     AddHeight = 50.f;
                 }
@@ -19574,7 +19574,7 @@ void RenderEffectShadows()
 					break;
 				case BITMAP_TWLIGHT:
                 case BITMAP_SHOCK_WAVE:
-					if ( o->Type == BITMAP_SHOCK_WAVE && gMapManager.InHellas() && o->SubType!=6 )
+					if ( o->Type == BITMAP_SHOCK_WAVE && gMapManager.InKalima() && o->SubType!=6 )
                     {
                         DisableDepthMask();
 					    RenderWaterTerrain ( o->Type, o->Position[0], o->Position[1], o->Scale, o->Scale, o->Light, -o->Angle[2] );

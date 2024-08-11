@@ -298,14 +298,15 @@ void SEASON3B::CNewUICharacterInfoWindow::RenderTableTexts()
 
 	if(gCharacterManager.IsMasterLevel(CharacterAttribute->Class) == true)
 	{
-		unicode::_sprintf(strLevel, GlobalText[1745]);
-		unicode::_sprintf(strExp, "----------");
+		unicode::_sprintf(strLevel, GlobalText[200], CharacterAttribute->Level);
+		unicode::_sprintf(strExp, GlobalText[201], CharacterAttribute->Experience, CharacterAttribute->NextExperince);
 	}
 	else
 	{
 		unicode::_sprintf(strLevel, GlobalText[200], CharacterAttribute->Level);
 		unicode::_sprintf(strExp, GlobalText[201], CharacterAttribute->Experience, CharacterAttribute->NextExperince);
 	}
+
 	if(CharacterAttribute->Level > 9)
 	{
 		int iMinus, iMaxMinus;

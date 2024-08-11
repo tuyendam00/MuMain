@@ -7231,7 +7231,11 @@ void MoveHero()
 	}
 	else
 	{
-		Angle = (int)(Hero->Object.Angle[2]+CreateAngle((float)HeroX,(float)HeroY,(float)MouseX,(float)MouseY)) + 360 - 45;
+		if (m_CameraOnOff == 1)
+			Angle = (int)(Hero->Object.Angle[2] + CreateAngle((float)HeroX, (float)HeroY, (float)MouseX, (float)MouseY)) + 360 + CameraAngle[2];
+		else
+			Angle = (int)(Hero->Object.Angle[2] + CreateAngle((float)HeroX, (float)HeroY, (float)MouseX, (float)MouseY)) + 360 - 45;
+
 		Angle %= 360;
 		if(Angle < 120) Angle = 120;
 		if(Angle > 240) Angle = 240;
@@ -7321,7 +7325,11 @@ void MoveHero()
 			Hero->AttackTime == 0)
 		{
 			StandTime = 0;
-			HeroAngle = -(int)(CreateAngle((float)MouseX,(float)MouseY,(float)HeroX,(float)HeroY)) + 360 + 45;
+			if (m_CameraOnOff == 1)
+				HeroAngle = -(int)(CameraAngle[2] + CreateAngle((float)MouseX, (float)MouseY, (float)HeroX, (float)HeroY)) + 360;
+			else
+				HeroAngle = -(int)(CreateAngle((float)MouseX, (float)MouseY, (float)HeroX, (float)HeroY)) + 360 + 45;
+
 			HeroAngle %= 360;
 			BYTE Angle1 = ((BYTE)((o->Angle[2]+22.5f)/360.f*8.f+1.f)%8);
 			BYTE Angle2 = ((BYTE)(((float)HeroAngle+22.5f)/360.f*8.f+1.f)%8);

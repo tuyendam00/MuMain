@@ -375,6 +375,7 @@
 
 #define MAX_RESISTANCE		7
 
+
 #ifdef PBG_ADD_NEWCHAR_MONK
 #define MAX_CLASS			7
 #else //PBG_ADD_NEWCHAR_MONK

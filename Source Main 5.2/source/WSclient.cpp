@@ -1110,7 +1110,7 @@ void ReceiveRevival( BYTE *ReceiveBuffer )
 		gMapManager.WorldActive = Data->Map;
 		gMapManager.LoadWorld(gMapManager.WorldActive);
 	
-        if ( ( gMapManager.InChaosCastle( OldWorld ) == true && OldWorld!=gMapManager.WorldActive ) 
+        if ( ( gMapManager.InChaosCastle() == true && OldWorld!=gMapManager.WorldActive ) 
 			|| gMapManager.InChaosCastle() == true )
         {
             SetCharacterClass ( Hero );
@@ -1762,7 +1762,7 @@ BOOL ReceiveTeleport(BYTE *ReceiveBuffer, BOOL bEncrypted)
 			if(gMapManager.WorldActive == WD_34CRYWOLF_1ST)
 				SendRequestCrywolfInfo();
 			
-            if ( ( gMapManager.InChaosCastle(OldWorld) == true && OldWorld!=gMapManager.WorldActive ) || gMapManager.InChaosCastle()==true )
+            if ( ( gMapManager.InChaosCastle() == true && OldWorld!=gMapManager.WorldActive ) || gMapManager.InChaosCastle()==true )
             {
                 PlayBuffer( SOUND_CHAOS_ENVIR, NULL, true );
 				
@@ -2211,7 +2211,7 @@ void ReceiveCreatePlayerViewport(BYTE *ReceiveBuffer,int Size)
 				c->Movement = true;
 			}
 			
-			if ( gMapManager.InHellas() )
+			if ( gMapManager.InKalima() )
 			{
 				CreateJoint ( BITMAP_FLARE+1, o->Position, o->Position, o->Angle, 8, o, 20.f );
 			}
@@ -6094,7 +6094,7 @@ void ReceiveLevelUp( BYTE *ReceiveBuffer )
     CharacterAttribute->wMaxMinusPoint	= Data->wMaxMinusPoint;
 	
 	unicode::t_char szText[256] = {NULL, };
-	WORD iExp = CharacterAttribute->NextExperince - CharacterAttribute->Experience;
+	DWORD iExp = CharacterAttribute->NextExperince - CharacterAttribute->Experience;
 	sprintf(szText,GlobalText[486], iExp);
 	g_pChatListBox->AddText("", szText, SEASON3B::TYPE_SYSTEM_MESSAGE);
 
