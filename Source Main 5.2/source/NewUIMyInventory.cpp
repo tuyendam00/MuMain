@@ -1916,7 +1916,7 @@ bool SEASON3B::CNewUIMyInventory::InventoryProcess()
 			}
 			else if(pItem->Type == ITEM_HELPER+48)
 			{
-				if(Hero->SafeZone || gMapManager.InKalima()) 
+				if(Hero->SafeZone || gMapManager.InHellas()) 
 				{
 					g_pChatListBox->AddText("", GlobalText[1238], SEASON3B::TYPE_ERROR_MESSAGE);
 				}

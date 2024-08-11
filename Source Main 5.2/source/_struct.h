@@ -177,15 +177,8 @@ typedef struct
 	WORD Value;
 	int  iZen;
 	BYTE  AttType;
-	BYTE RequireClass[MAX_CLASS];
-	BYTE Resistance[MAX_RESISTANCE];
-//#ifdef PBG_ADD_NEWCHAR_MONK_SKILL
-//	BYTE RequireClass[MAX_CLASS];
-//	BYTE Resistance[MAX_RESISTANCE];
-//#else //PBG_ADD_NEWCHAR_MONK_SKILL
-//	BYTE RequireClass[MAX_CLASS+1];
-//	BYTE Resistance[MAX_RESISTANCE+1];
-//#endif //PBG_ADD_NEWCHAR_MONK_SKILL
+	BYTE RequireClass[MAX_CLASS+1];
+	BYTE Resistance[MAX_RESISTANCE+1];
 } ITEM_ATTRIBUTE;
 
 typedef struct _MASTER_LEVEL_DATA
@@ -228,7 +221,11 @@ typedef struct tagITEM
 	WORD  RequireCharisma;
 	WORD  RequireLevel;
 	BYTE  SpecialNum;
-	WORD  Special[MAX_ITEM_SPECIAL];
+#ifdef PBG_ADD_NEWCHAR_MONK_SKILL
+	WORD  Special     [MAX_ITEM_SPECIAL];
+#else //PBG_ADD_NEWCHAR_MONK_SKILL
+	BYTE  Special     [MAX_ITEM_SPECIAL];
+#endif //PBG_ADD_NEWCHAR_MONK_SKILL
 	BYTE  SpecialValue[MAX_ITEM_SPECIAL];
 	DWORD Key;	//client olny
 	
@@ -689,12 +686,7 @@ typedef struct
 	BYTE	byOptionCount;
 	BYTE	byFullOption[5];
 	BYTE	byFullOptionValue[5];
-	BYTE byRequireClass[MAX_CLASS];
-//#ifdef PBG_ADD_NEWCHAR_MONK_SKILL
-//	BYTE byRequireClass[MAX_CLASS];
-//#else //PBG_ADD_NEWCHAR_MONK_SKILL
-//	BYTE byRequireClass[MAX_CLASS + 1];
-//#endif //PBG_ADD_NEWCHAR_MONK_SKILL
+	BYTE	byRequireClass[MAX_CLASS];
 }ITEM_SET_OPTION;
 //csitemsetoption end
 

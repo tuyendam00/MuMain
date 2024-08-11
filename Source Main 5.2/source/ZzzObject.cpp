@@ -774,7 +774,7 @@ void Draw_RenderObject(OBJECT *o,bool Translate,int Select, int ExtraMon)
 			b->RenderMesh(14, RENDER_CHROME|RENDER_BRIGHT,o->Alpha,o->BlendMesh,o->BlendMeshLight,o->BlendMeshTexCoordU,o->BlendMeshTexCoordV,o->HiddenMesh);
 			b->RenderMesh(15, RENDER_CHROME|RENDER_BRIGHT,o->Alpha,o->BlendMesh,o->BlendMeshLight,o->BlendMeshTexCoordU,o->BlendMeshTexCoordV,o->HiddenMesh);
 
-			if ( gMapManager.WorldActive != WD_10HEAVEN && gMapManager.InKalima()==false )
+			if ( gMapManager.WorldActive != WD_10HEAVEN && gMapManager.InHellas()==false )
 			{
 				if(!g_Direction.m_CKanturu.IsMayaScene())
 				{
@@ -845,7 +845,7 @@ void Draw_RenderObject(OBJECT *o,bool Translate,int Select, int ExtraMon)
 
 			b->EndRender();
 			
-			if (gMapManager.WorldActive != WD_10HEAVEN && gMapManager.InKalima() == FALSE)
+			if (gMapManager.WorldActive != WD_10HEAVEN && gMapManager.InHellas() == FALSE)
 			{
 				if(!g_Direction.m_CKanturu.IsMayaScene())
 				{
@@ -986,7 +986,7 @@ void Draw_RenderObject(OBJECT *o,bool Translate,int Select, int ExtraMon)
             }
             b->EndRender();
 
-            if ( gMapManager.WorldActive!=WD_10HEAVEN && gMapManager.InKalima()==false )
+            if ( gMapManager.WorldActive!=WD_10HEAVEN && gMapManager.InHellas()==false )
             {
 				if(!g_Direction.m_CKanturu.IsMayaScene())
 				{
@@ -6460,7 +6460,7 @@ void RenderItems()
 				{
 					o->Position[2] += 10.0f * ( float)sinf( ( float)( i * 1237 + WorldTime)*0.002f);
 				}
-                else if ( gMapManager.InKalima()==true )
+                else if ( gMapManager.InHellas()==true )
                 {
 					o->Position[2] = GetWaterTerrain ( o->Position[0], o->Position[1] )+180;
                 }
@@ -9347,7 +9347,7 @@ void RenderPartObjectEffect(OBJECT *o,int Type,vec3_t Light,float Alpha,int Item
 		}
         bool bRenderShadow = true;
 
-        if ( gMapManager.InKalima() )
+        if ( gMapManager.InHellas() )
         {
             bRenderShadow = false;
         }
@@ -10354,7 +10354,7 @@ void RenderPartObjectEffect(OBJECT *o,int Type,vec3_t Light,float Alpha,int Item
 		}
         bool bRenderShadow = true;
 
-        if ( gMapManager.InKalima() )
+        if ( gMapManager.InHellas() )
         {
             bRenderShadow = false;
         }

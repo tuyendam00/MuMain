@@ -73,9 +73,6 @@ extern char m_ID[];
 extern char m_Version[];
 extern int  m_SoundOnOff;
 extern int  m_MusicOnOff;
-// ---- 3D camera ----
-extern int	m_CameraOnOff;
-// -------------------
 extern int  m_Resolution;
 extern int m_nColorDepth;	
 

@@ -2146,18 +2146,10 @@ bool TestFrustrum2D(float x,float y,float Range)
 	int j = 3;
 	for(int i=0;i<4;j=i,i++)
 	{
-		if (m_CameraOnOff == 1)
-		{
-			if (CameraZoom > 0)
-				Range -= ((50.f / 2.5f) * CameraZoom);//Range -= 600.f;
-			else
-				Range -= 50.f;
-
-			if (AngleY3D < 0)
-				Range += 15.f * AngleY3D;
-		}
-
-		if ((FrustrumX[i] - x) * (FrustrumY[j] - y) - (FrustrumX[j] - x) * (FrustrumY[i] - y) <= Range)
+		float d = (FrustrumX[i]-x) * (FrustrumY[j]-y) -
+	      		  (FrustrumX[j]-x) * (FrustrumY[i]-y);
+		Range = Range - 70;
+		if(d <= Range)
 		{
 			return false;
 		}
@@ -2228,15 +2220,8 @@ bool TestFrustrum(vec3_t Position,float Range)
 	for(int i=0;i<5;i++)
 	{
 		float Value;
-		if (m_CameraOnOff == 1)
-		{
-			if (CameraZoom > 0)
-				Range += 0.f + ((41.66f / 2.5f) * CameraZoom);//Range += 500.f;
-			else
-				Range += 41.66f;
-		}
-		Value = FrustrumFaceD[i] + DotProduct(Position, FrustrumFaceNormal[i]);
-		if (Value < -(Range)) return false;
+		Value = FrustrumFaceD[i] + DotProduct(Position,FrustrumFaceNormal[i]);
+		if(Value < -Range) return false;
 	}
 	return true;
 }

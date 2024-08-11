@@ -302,7 +302,7 @@ bool MoveBug ( OBJECT* o, bool bForceRender )
                         }
                     }
                 }
-                else if ( rand()%3==0 && !gMapManager.InKalima() )
+                else if ( rand()%3==0 && !gMapManager.InHellas() )
 				{
 					if( o->Owner && !g_isCharacterBuff(o->Owner, eBuff_Cloaking) )			
 					{
@@ -384,7 +384,7 @@ bool MoveBug ( OBJECT* o, bool bForceRender )
                         }
                     }
                 }
-                else if ( rand()%2==0 && !gMapManager.InKalima() )
+                else if ( rand()%2==0 && !gMapManager.InHellas() )
 				{
 					if( o->Owner && !g_isCharacterBuff(o->Owner, eBuff_Cloaking) )			
 					{
@@ -1246,7 +1246,7 @@ void MoveBoids ()
 			break;
 #endif //PJH_NEW_SERVER_SELECT_MAP
 		default:
-            if ( gMapManager.InKalima()==true )
+            if ( gMapManager.InHellas()==true )
             {
                 if ( i>1 )
                 {
@@ -1307,7 +1307,7 @@ void MoveBoids ()
 					|| gMapManager.WorldActive==WD_10HEAVEN 
 					|| ((gMapManager.WorldActive==WD_7ATLANSE|| gMapManager.WorldActive==WD_67DOPPLEGANGER3)  && ( TerrainWall[Index]==0 || TerrainWall[Index]==TW_CHARACTER ) )
                     || gMapManager.InBloodCastle()
-                    || gMapManager.InKalima()
+                    || gMapManager.InHellas()
 					|| (gMapManager.WorldActive == WD_51HOME_6TH_CHAR && i < 1 && rand()%500==0 && Hero->SafeZone!=true)
                 )
 			{
@@ -1653,7 +1653,7 @@ void MoveFishs()
 	for ( int i=0; i<MAX_FISHS; i++ )
 	{
 		if ( gMapManager.WorldActive!=WD_7ATLANSE && gMapManager.WorldActive!=WD_8TARKAN 
-            && gMapManager.InKalima()==false 
+            && gMapManager.InHellas()==false 
 			&& gMapManager.WorldActive!=WD_34CRYWOLF_1ST
 			&& gMapManager.WorldActive!=WD_67DOPPLEGANGER3
             )
@@ -1674,7 +1674,7 @@ void MoveFishs()
 				 ( (gMapManager.WorldActive==WD_7ATLANSE
 					|| gMapManager.WorldActive==WD_67DOPPLEGANGER3
 					 ) && ( TerrainWall[Index]==0 || TerrainWall[Index]==TW_CHARACTER ) ) ||
-                 ( gMapManager.InKalima() && ( TerrainWall[Index]==0 || TerrainWall[Index]==TW_CHARACTER ) ) || 
+                 ( gMapManager.InHellas() && ( TerrainWall[Index]==0 || TerrainWall[Index]==TW_CHARACTER ) ) || 
                  ( M33Aida::IsInAida() && ( TerrainWall[Index]==0 || TerrainWall[Index]==TW_CHARACTER ) ) || 
 				 ( (gMapManager.WorldActive==WD_8TARKAN 
 				 || gMapManager.WorldActive== WD_34CRYWOLF_1ST
@@ -1765,7 +1765,7 @@ void MoveFishs()
 					break;
 				}
 
-                if ( gMapManager.InKalima() )
+                if ( gMapManager.InHellas() )
                 {
      				o->Type = -1;
         			o->Scale    = (float)(rand()%4+8)*0.1f;
@@ -1806,7 +1806,7 @@ void MoveFishs()
 				Vector(o->Velocity*(float)(rand()%4+6),0.f,0.f,Position);
 				VectorRotate(Position,o->Matrix,Direction);
 				VectorAdd(o->Position,Direction,o->Position);
-				if ( gMapManager.WorldActive!=7 || gMapManager.InKalima()==false || gMapManager.WorldActive!=WD_67DOPPLEGANGER3)
+				if ( gMapManager.WorldActive!=7 || gMapManager.InHellas()==false || gMapManager.WorldActive!=WD_67DOPPLEGANGER3)
                 {
 					o->Position[2] = RequestTerrainHeight(o->Position[0],o->Position[1]);
                 }
@@ -1815,7 +1815,7 @@ void MoveFishs()
 				int Index = TERRAIN_INDEX_REPEAT((int)(o->Position[0]/TERRAIN_SCALE),(int)(o->Position[1]/TERRAIN_SCALE));
 
 
-				if ( gMapManager.WorldActive==WD_8TARKAN || gMapManager.InKalima() || M33Aida::IsInAida()	)
+				if ( gMapManager.WorldActive==WD_8TARKAN || gMapManager.InHellas() || M33Aida::IsInAida()	)
                 {
 					 if ( TerrainWall[Index]==1 || TerrainWall[Index]>=TW_NOGROUND )
                      {
@@ -1828,7 +1828,7 @@ void MoveFishs()
                          if(o->SubType > 0) o->SubType--;
                      }
 
-                     if ( gMapManager.InKalima() && o->LifeTime<=1 )
+                     if ( gMapManager.InHellas() && o->LifeTime<=1 )
                      {
                          o->Live = false;
                      }

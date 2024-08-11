@@ -408,10 +408,8 @@ void OpenItemScript(char *FileName)
 			BYTE *pSeek = Buffer;
 			for(int i=0;i<MAX_ITEM;i++)
 			{
-				BuxConvert(pSeek, Size);
-				memcpy(&ItemAttribute[i], pSeek, Size);
-				ItemAttribute[i].Width = MAX(1, ItemAttribute[i].Width);
-				ItemAttribute[i].Height = MAX(1, ItemAttribute[i].Height);
+				BuxConvert(pSeek,Size);
+				memcpy(&ItemAttribute[i],pSeek,Size);
 				pSeek += Size;
 			}
 		}
@@ -2516,7 +2514,7 @@ char*   getMonsterName ( int type )
             return MonsterScript[i].Name;
         }
     }
-    return "Unknown";
+    return NULL;
 }
 
 void MonsterConvert(MONSTER *m,int Level)

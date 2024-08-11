@@ -32,7 +32,7 @@ void CSWaterTerrain::Init ( void )
 
 void CSWaterTerrain::Update ( void )
 {
-    if ( !gMapManager.InKalima() ) return;
+    if ( !gMapManager.InHellas(m_iMapIndex) ) return;
 
     int WaveX;
     int WaveY; 
@@ -52,7 +52,7 @@ void CSWaterTerrain::Update ( void )
 
 void    CSWaterTerrain::Render ( void )
 {
-    if ( !gMapManager.InKalima() ) return;
+    if ( !gMapManager.InHellas(m_iMapIndex) ) return;
 
     CreateTerrain ( (Hero->PositionX)*2, (Hero->PositionY)*2 );
 

@@ -1024,9 +1024,6 @@ char m_Version[11];
 char m_ExeVersion[11];
 int  m_SoundOnOff;
 int  m_MusicOnOff;
-// ---- 3D camera ----
-int	m_CameraOnOff;
-// -------------------
 int  m_Resolution;
 int	m_nColorDepth;
 int	g_iRenderTextType = 0;
@@ -1088,9 +1085,6 @@ BOOL OpenInitFile()
 	m_ID[0] = '\0';
 	m_SoundOnOff = 1;
 	m_MusicOnOff = 1;
-	// ---- 3D camera ----
-	m_CameraOnOff = 1;
-	// -------------------
 	m_Resolution = 0;
 	m_nColorDepth = 0;
 
@@ -1117,13 +1111,6 @@ BOOL OpenInitFile()
 		{
 			m_MusicOnOff = false;
 		}
-		// ---- 3D camera ----
-		dwSize = sizeof(int);
-		if (RegQueryValueEx(hKey, "3DCameraOnOff", 0, NULL, (LPBYTE)&m_CameraOnOff, &dwSize) != ERROR_SUCCESS)
-		{
-			m_CameraOnOff = false;
-		}
-		// -------------------
 		dwSize = sizeof ( int);
 		if ( RegQueryValueEx (hKey, "Resolution", 0, NULL, (LPBYTE) & m_Resolution, &dwSize) != ERROR_SUCCESS)
 			m_Resolution = 1;

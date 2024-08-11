@@ -93,11 +93,6 @@ bool SEASON3B::CNewUIOptionWindow::UpdateMouseEvent()
 	{
 		m_bSlideHelp = !m_bSlideHelp;
 	}
-	// 3D Camera
-	if (SEASON3B::IsPress(VK_LBUTTON) && CheckMouseIn(m_Pos.x + 150, m_Pos.y + 149, 15, 15))
-	{
-		SetCameraOnOff();
-	}
 	
 	if(CheckMouseIn(m_Pos.x+33-8, m_Pos.y+104, 124+8, 16))
 	{
@@ -282,8 +277,6 @@ void SEASON3B::CNewUIOptionWindow::RenderContents()
 	RenderImage(IMAGE_OPTION_POINT, x, y, 10.f, 10.f);
 	y += 22.f;
 	RenderImage(IMAGE_OPTION_POINT, x, y, 10.f, 10.f);
-	// 3D Camera
-	RenderImage(IMAGE_OPTION_POINT, x + 60, y, 10.f, 10.f);
 	
 	g_pRenderText->SetFont(g_hFont);
 	g_pRenderText->SetTextColor(255, 255, 255, 255);
@@ -293,8 +286,6 @@ void SEASON3B::CNewUIOptionWindow::RenderContents()
 	g_pRenderText->RenderText(m_Pos.x+40, m_Pos.y+92, GlobalText[389]);
 	g_pRenderText->RenderText(m_Pos.x+40, m_Pos.y+132, GlobalText[919]);
 	g_pRenderText->RenderText(m_Pos.x+40, m_Pos.y+154, GlobalText[1840]);
-	// 3D Camera
-	g_pRenderText->RenderText(m_Pos.x + 100, m_Pos.y + 154, "3D Camera");
 
 }
 
@@ -341,15 +332,6 @@ void SEASON3B::CNewUIOptionWindow::RenderButtons()
 		RenderImage(IMAGE_OPTION_EFFECT_COLOR, m_Pos.x+25, m_Pos.y+168, 141.f * 0.2f * 	(m_iRenderLevel+1), 29.f);
 	}
 
-	// 3D Camera checkbox
-	if (m_CameraOnOff)
-	{
-		RenderImage(IMAGE_OPTION_BTN_CHECK, m_Pos.x + 150, m_Pos.y + 149, 15, 15, 0, 0);
-	}
-	else
-	{
-		RenderImage(IMAGE_OPTION_BTN_CHECK, m_Pos.x + 150, m_Pos.y + 149, 15, 15, 0, 15.f);
-	}
 }
 
 void SEASON3B::CNewUIOptionWindow::SetAutoAttack(bool bAuto)
@@ -400,19 +382,4 @@ void SEASON3B::CNewUIOptionWindow::SetRenderLevel(int iRender)
 int SEASON3B::CNewUIOptionWindow::GetRenderLevel()
 {
 	return m_iRenderLevel;
-}
-
-void SEASON3B::CNewUIOptionWindow::SetCameraOnOff()
-{
-
-	HKEY hKey;
-	DWORD dwDisp;
-	DWORD dwSize;
-	dwSize = sizeof(int);
-	if (ERROR_SUCCESS == RegCreateKeyEx(HKEY_CURRENT_USER, "SOFTWARE\\Webzen\\Mu\\Config", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hKey, &dwDisp))
-	{
-		m_CameraOnOff = !m_CameraOnOff;
-		RegSetValueEx(hKey, "3DCameraOnOff", 0, NULL, (LPBYTE)&m_CameraOnOff, dwSize);
-	}
-	RegCloseKey(hKey);
 }

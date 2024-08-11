@@ -50,10 +50,6 @@ void CreatePoint(vec3_t Position,int Value,vec3_t Color,float scale, bool bMove)
 
 void RenderPoints( BYTE byRenderOneMore )
 {
-#ifdef DO_PROFILING
-	g_pProfiler->BeginUnit(EPROFILING_RENDER_POINTS, PROFILING_RENDER_POINTS);
-#endif // DO_PROFILING
-
 	EnableAlphaTest();
     DisableDepthTest();
     for(int i=0;i<MAX_POINTS;i++)
@@ -76,14 +72,7 @@ void RenderPoints( BYTE byRenderOneMore )
 			}
 #endif //PBG_ADD_NEWCHAR_MONK_SKILL
 
-			if (o->Type > -1)
-			{
-				RenderNumberPoints(o->Position, o->Type, o->Angle, o->Gravity * 0.4f, o->Scale);
-			}
-			else
-			{
-				RenderNumber(o->Position, o->Type, o->Angle, o->Gravity * 0.4f, o->Scale);
-			}
+            RenderNumber(o->Position,o->Type,o->Angle,o->Gravity*0.4f,o->Scale);
 		}
 	}
 }
